@@ -1,0 +1,6 @@
+/dependencies/
+/build/
+/include/limine/
+/include/standard/
+.cache/
+compile_commands.json
