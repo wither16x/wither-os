@@ -1,5 +1,5 @@
-#include "kernel/cpu/asm.h"
 #include "kernel/lib/types.h"
+#include "kernel/panic.h"
 
 extern "C" {
 
@@ -10,14 +10,12 @@ int __cxa_atexit(void (*)(void *), void *, void *)
 
 void __cxa_pure_virtual()
 {
-    while (true)
-        cpu::idle();
+    panic();
 }
 
 void __cxa_deleted_virtual()
 {
-    while (true)
-        cpu::idle();
+    panic();
 }
 
 void *__dso_handle;

@@ -33,7 +33,7 @@ COMMONFLAGS := -target x86_64-unknown-none-elf \
 CCFLAGS += -xc -std=gnu11 \
 	-nostdinc -I$(INCLUDE_DIR) -I$(LIMINE_DIR) -isystem $(STDHDR_DIR)
 CFLAGS += $(COMMONFLAGS)
-CXXFLAGS += -xc++ -std=c++23 \
+CXXFLAGS += -xc++ -std=c++26 \
 	-Wnon-virtual-dtor -Wold-style-cast \
 	-Woverloaded-virtual -Wnull-dereference -Wimplicit-fallthrough \
 	-fno-rtti \
