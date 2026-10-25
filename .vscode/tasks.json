@@ -35,7 +35,7 @@
             "dependsOrder": "sequence",
             "problemMatcher": [],
             "options": {
-                // requires the Task extension
+                // requires the Tasks extension
                 "statusbar": {
                     "label": "$(play) Run"
                 }
