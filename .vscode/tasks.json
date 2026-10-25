@@ -1,0 +1,45 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "clean",
+            "type": "shell",
+            "command": "make clean",
+            "problemMatcher": []
+        },
+        {
+            "label": "build",
+            "type": "shell",
+            "command": "make TOOLCHAIN=\"${workspaceFolder}/make/toolchain.mk\"",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "iso",
+            "type": "shell",
+            "command": "make iso",
+            "problemMatcher": []
+        },
+        {
+            "label": "run-uefi",
+            "type": "shell",
+            "command": "make run-uefi",
+            "problemMatcher": []
+        },
+        {
+            "label": "Clean, build and run everything",
+            "dependsOn": ["clean", "build", "iso", "run-uefi"],
+            "dependsOrder": "sequence",
+            "problemMatcher": [],
+            "options": {
+                // requires the Task extension
+                "statusbar": {
+                    "label": "$(play) Run"
+                }
+            }
+        },
+    ]
+}
