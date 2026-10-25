@@ -13,7 +13,7 @@ ISO_DIR := $(BUILD_DIR)/iso
 IMAGE_DIR := $(BUILD_DIR)/images
 LIMINE_DIR := $(KERNEL_DIR)/dependencies/limine
 LIMINE_CONF := config/limine.conf
-ISO_IMAGE := $(ISO_DIR)/os.iso
+ISO_IMAGE := $(IMAGE_DIR)/wither_os.iso
 
 QEMU := qemu-system-x86_64
 OVMF := /usr/share/ovmf/OVMF.fd
