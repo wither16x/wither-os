@@ -43,10 +43,10 @@ iso:
 	@./$(LIMINE_DIR)/limine bios-install $(ISO_IMAGE)
 
 run-bios:
-	@$(QEMU) -cdrom $(ISO_IMAGE)
+	@$(QEMU) -cdrom $(ISO_IMAGE) -serial stdio
 
 run-uefi:
-	@$(QEMU) -cdrom $(ISO_IMAGE) -bios $(OVMF)
+	@$(QEMU) -cdrom $(ISO_IMAGE) -bios $(OVMF) -serial stdio
 
 clean:
 	@echo "Cleaning kernel..."

@@ -1,4 +1,5 @@
 #include "kernel/boot/requests.h"
+#include "kernel/drivers/serial.h"
 #include "kernel/panic.h"
 
 extern void (*__init_array_start[])();
@@ -16,6 +17,11 @@ extern "C" void kmain()
         (*ctor++)();
     for (void (**ctor)() = __ctors_end; ctor > __ctors_start;)
         (*--ctor)();
+
+    if (serial::init().error() == serial::Error::InitFail)
+        ; // TODO: add support for multiple output devices
+
+    serial::write("Hello, world!");
 
     panic();
 }
