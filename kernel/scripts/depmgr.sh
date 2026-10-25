@@ -15,6 +15,29 @@ download_dependency() {
     git clone "$1" --depth=1 --branch="$2" "$DEPS_DIR/$3"
 }
 
+download_dependencies() {
+    download_dependency https://github.com/limine-bootloader/limine-protocol trunk \
+        limine-protocol
+    download_dependency https://github.com/osdev0/freestanding-c-hdrs trunk \
+        freestanding-c-hdrs
+    download_dependency https://github.com/osdev0/freestanding-cxx-hdrs trunk \
+        freestanding-cxx-hdrs
+}
+
+install_dependencies() {
+    if [[ -d "$DEPS_DIR/limine-protocol" ]]; then
+        cp -v -r "$DEPS_DIR/limine-protocol/include/" "include/limine/"
+    fi
+
+    if [[ -d "$DEPS_DIR/freestanding-c-hdrs" ]]; then
+        cp -v -r "$DEPS_DIR/freestanding-c-hdrs/include/" "include/standard/"
+    fi
+
+    if [[ -d "$DEPS_DIR/freestanding-cxx-hdrs" ]]; then
+        cp -v -r "$DEPS_DIR/freestanding-cxx-hdrs/include/" "include/standard/cxx/"
+    fi
+}
+
 mkdir -p "$DEPS_DIR"
 
 case "$1" in
@@ -28,22 +51,13 @@ case "$1" in
         echo "$OPT_GET             download and install missing dependencies"
         ;;
     "$OPT_DOWNLOAD")
-        download_dependency https://github.com/limine-bootloader/limine-protocol trunk \
-            limine-protocol
-        download_dependency https://github.com/osdev0/freestanding-c-hdrs trunk \
-            freestanding-c-hdrs
+        download_dependencies
         ;;
     "$OPT_REMOVE")
         rm -rf "$DEPS_DIR"
         ;;
     "$OPT_INSTALL")
-        if [[ -d "$DEPS_DIR/limine-protocol" ]]; then
-            cp -v -r "$DEPS_DIR/limine-protocol/*" "include/limine/"
-        fi
-
-        if [[ -d "$DEPS_DIR/freestanding-c-hdrs" ]]; then
-            cp -v -r "$DEPS_DIR/freestanding-c-hdrs/*" "include/standard/"
-        fi
+        install_dependencies
         ;;
     "$OPT_UNINSTALL")
         if [[ -d "include/limine" ]]; then
@@ -55,18 +69,8 @@ case "$1" in
         fi
         ;;
     "$OPT_GET")
-        download_dependency https://github.com/limine-bootloader/limine-protocol trunk \
-            limine-protocol
-        download_dependency https://github.com/osdev0/freestanding-c-hdrs trunk \
-            freestanding-c-hdrs
-
-        if [[ -d "$DEPS_DIR/limine-protocol" ]]; then
-            cp -v -r "$DEPS_DIR/limine-protocol/include/" "include/limine/"
-        fi
-
-        if [[ -d "$DEPS_DIR/freestanding-c-hdrs" ]]; then
-            cp -v -r "$DEPS_DIR/freestanding-c-hdrs/include/" "include/standard/"
-        fi
+        download_dependencies
+        install_dependencies
         ;;
     *)
         echo "Invalid option. Use --help for more info."

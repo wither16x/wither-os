@@ -3,8 +3,10 @@
 
 NASM := nasm
 CC := clang
-LD := clang
+CXX := clang++
+LD := clang++
 
 NASMFLAGS :=
 CCFLAGS :=
+CXXFLAGS :=
 LDFLAGS := -fuse-ld=lld

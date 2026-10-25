@@ -37,6 +37,25 @@ SECTIONS
 
     . = ALIGN(CONSTANT(MAXPAGESIZE));
 
+    .init_array : {
+        __init_array_start = .;
+        KEEP(*(SORT(.init_array.?)))
+        KEEP(*(SORT(.init_array.??)))
+        KEEP(*(SORT(.init_array.???)))
+        KEEP(*(SORT(.init_array.????)))
+        KEEP(*(SORT(.init_array.?????)))
+        KEEP(*(.init_array.*))
+        KEEP(*(.init_array))
+        __init_array_end = .;
+    } :data
+
+    .ctors : {
+        __ctors_start = .;
+        KEEP(*(.ctors))
+        KEEP(*(SORT(.ctors.*)))
+        __ctors_end = .;
+    } :data
+
     .data : {
         *(.data .data.*)
     } :data

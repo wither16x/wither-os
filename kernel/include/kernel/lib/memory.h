@@ -1,12 +1,16 @@
 #ifndef KERNEL_LIB_MEMORY_H_
 #define KERNEL_LIB_MEMORY_H_
 
-#include <stddef.h>
+#include <cstddef>
 
-void *memcpy(void *restrict dest, const void *restrict src, size_t n);
-void *memset(void *s, int c, size_t n);
-void *memmove(void *dest, const void *src, size_t n);
-int memcmp(const void *s1, const void *s2, size_t n);
+extern "C" {
+
+void *memcpy(void *__restrict dest, const void *__restrict src, std::size_t n);
+void *memset(void *s, int c, std::size_t n);
+void *memmove(void *dest, const void *src, std::size_t n);
+int memcmp(const void *s1, const void *s2, std::size_t n);
+
+} // extern "C"
 
 /* For optimization purposes: the compiler can optimize builtins better than
 * functions. */
@@ -15,4 +19,4 @@ int memcmp(const void *s1, const void *s2, size_t n);
 #define memmove __builtin_memmove
 #define memcmp __builtin_memcmp
 
-#endif /* KERNEL_LIB_MEMORY_H_ */
+#endif // KERNEL_LIB_MEMORY_H_
