@@ -12,7 +12,9 @@ OPT_UNINSTALL="--uninstall"
 OPT_GET="--get"
 
 download_dependency() {
-    git clone "$1" --depth=1 --branch="$2" "$DEPS_DIR/$3"
+    if [[ ! -d "$DEPS_DIR/$3" ]]; then
+        git clone "$1" --depth=1 --branch="$2" "$DEPS_DIR/$3"
+    fi
 }
 
 download_dependencies() {
@@ -22,6 +24,8 @@ download_dependencies() {
         freestanding-c-hdrs
     download_dependency https://github.com/osdev0/freestanding-cxx-hdrs trunk \
         freestanding-cxx-hdrs
+    download_dependency https://github.com/Limine-Bootloader/Limine v11.x-binary \
+        limine
 }
 
 install_dependencies() {
@@ -35,6 +39,10 @@ install_dependencies() {
 
     if [[ -d "$DEPS_DIR/freestanding-cxx-hdrs" ]]; then
         cp -v -r "$DEPS_DIR/freestanding-cxx-hdrs/include/" "include/standard/cxx/"
+    fi
+
+    if [[ -d "$DEPS_DIR/limine" ]]; then
+        make -C "$DEPS_DIR/limine"
     fi
 }
 

@@ -21,30 +21,25 @@ OBJFILES := $(COBJECTS) $(CXXOBJECTS) $(ASMOBJECTS)
 
 NASMFLAGS += -f elf64 \
 	-i $(INCLUDE_DIR)/
-CCFLAGS += -xc -target x86_64-unknown-none-elf \
-	-std=gnu11 \
+COMMONFLAGS := -target x86_64-unknown-none-elf \
 	-Wall -Wextra -Wpedantic -Wshadow -Wcast-qual -Wsign-conversion \
 	-Wstrict-prototypes -Wformat=2 -Wconversion \
 	-ffreestanding -fno-common -fno-stack-protector -fno-stack-check -fno-PIC \
 	-ffunction-sections -fdata-sections -fno-exceptions \
 	-m64 -march=x86-64 -mno-mmx -mno-sse -mno-sse2 -mno-red-zone -mcmodel=kernel \
 	-mno-80387 \
-	-nostdinc -I$(INCLUDE_DIR) -I$(LIMINE_DIR) -isystem $(STDHDR_DIR) \
 	-MMD -MP \
 	-g -O2 -pipe
-CXXFLAGS += -xc++ -target x86_64-unknown-none-elf \
-	-std=c++23 \
-	-Wall -Wextra -Wpedantic -Wshadow -Wcast-qual -Wsign-conversion \
-	-Wstrict-prototypes -Wformat=2 -Wnon-virtual-dtor -Wconversion -Wold-style-cast \
+CCFLAGS += -xc -std=gnu11 \
+	-nostdinc -I$(INCLUDE_DIR) -I$(LIMINE_DIR) -isystem $(STDHDR_DIR)
+CFLAGS += $(COMMONFLAGS)
+CXXFLAGS += -xc++ -std=c++23 \
+	-Wnon-virtual-dtor -Wold-style-cast \
 	-Woverloaded-virtual -Wnull-dereference -Wimplicit-fallthrough \
-	-ffreestanding -fno-common -fno-stack-protector -fno-stack-check -fno-PIC \
-	-ffunction-sections -fdata-sections -fno-exceptions -fno-rtti \
-	-m64 -march=x86-64 -mno-mmx -mno-sse -mno-sse2 -mno-red-zone -mcmodel=kernel \
-	-mno-80387 \
+	-fno-rtti \
 	-nostdinc -I$(INCLUDE_DIR) -I$(LIMINE_DIR) -isystem $(STDCXX_DIR) \
-	-isystem $(STDHDR_DIR) \
-	-MMD -MP \
-	-g -O2 -pipe
+	-isystem $(STDHDR_DIR)
+CXXFLAGS += $(COMMONFLAGS)
 LDFLAGS += -target x86_64-unknown-none-elf \
 	-Wl,--build-id=sha1 \
 	-Wl,-z,max-page-size=0x1000 \
