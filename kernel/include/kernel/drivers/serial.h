@@ -15,6 +15,7 @@ namespace serial
     void write(u8 value);
     void write(char value);
     void write(std::string_view str);
+    void write(int) = delete;
 } // namespace serial
 
 #endif // KERNEL_DRIVERS_SERIAL_H_
