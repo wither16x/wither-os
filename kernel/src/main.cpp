@@ -12,9 +12,6 @@ extern void (*__ctors_end[])();
 
 extern "C" void kmain()
 {
-    if (not requests::base_revision().supported())
-        panic();
-
     for (void (**ctor)() = __init_array_start; ctor < __init_array_end;)
         (*ctor++)();
     for (void (**ctor)() = __ctors_end; ctor > __ctors_start;)
@@ -25,15 +22,11 @@ extern "C" void kmain()
 
     serial::write("\033[2J"); // clear the screen
 
+    if (not requests::base_revision().supported())
+        panic("unsupported limine base revision");
+
     g_gdt.load();
     ok("initialized GDT");
 
-    debug("this is a debug message");
-    note("just in case you need to know that");
-    ok("operation successfull");
-    warn("i suggest you do something else");
-    err("we can't continue sorry");
-    fatal("you fucked up the whole kernel, GGs");
-
-    panic();
+    panic("nothing to do");
 }
