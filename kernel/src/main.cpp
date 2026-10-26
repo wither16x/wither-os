@@ -1,9 +1,8 @@
 #include "kernel/boot/requests.h"
+#include "kernel/cpu/gdt.h"
 #include "kernel/drivers/serial.h"
-#include "kernel/lib/numbers.h"
 #include "kernel/lib/print.h"
 #include "kernel/panic.h"
-#include <string_view>
 
 extern void (*__init_array_start[])();
 extern void (*__init_array_end[])();
@@ -24,13 +23,10 @@ extern "C" void kmain()
     if (serial::init().error() == serial::Error::InitFail)
         ; // TODO: add support for multiple output devices
 
-    std::string_view name = "Wither__";
-    char first_letter = name[0];
-    unsigned int age = 16;
-    print("Hello! My name is {}!\r\n", name);
-    print("The first letter of my name is {}.\r\n", first_letter);
-    print("I am {} years old, which is 0b{} in binary, 0o{} in octal and 0x{} in hexa.\r\n",
-        age, bin(age), oct(age), hex(age));
+    serial::write("\033[2J"); // clear the screen
+
+    g_gdt.load();
+    print("GDT init OK\r\n");
 
     panic();
 }
